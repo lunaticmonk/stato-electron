@@ -5,18 +5,18 @@
       <h2 class="ui header">Login</h2>
       <div class="ui form success">
         <div class="field">
-          <label>username</label>
-          <input type="email" placeholder="joe@schmoe.com" />
+          <label>email</label>
+          <input type="email" placeholder="joe@schmoe.com" name="email"/>
         </div>
         <div class="field">
           <label>password</label>
-          <input type="password" placeholder="*********" />
+          <input type="password" placeholder="*********" name="password"/>
         </div>
-        <!-- <div class="ui success message">
-          <div class="header">Form Completed</div>
-          <p>You're all signed up for the newsletter.</p>
-        </div> -->
-        <div class="ui submit button">Submit</div>
+        <div class="ui error message" style="display: none" id="form_error_success">
+          <div class="header">Error</div>
+          <p></p>
+        </div>
+        <div class="ui submit button" v-on:click="submit">Submit</div>
         <p>Don't have an account. Sign up <router-link to="/signup">here</router-link></p>
       </div>
     </div>
@@ -25,13 +25,36 @@
 
 <script>
 import CustomHeader from "./CustomHeader";
+import axios from "axios";
+require("dotenv").config();
 
 export default {
   name: "landing-page",
   components: { CustomHeader },
   methods: {
-    open(link) {
-      this.$electron.shell.openExternal(link);
+    async submit(event) {
+      event.preventDefault();
+      const data = {
+        email: document.querySelector('input[name="email"]').value,
+        password: document.querySelector('input[name="password"]').value
+      };
+
+      const config = {
+        headers: { 'x-access-token': localStorage.getItem('x-access-token') }
+      };
+      const result = await axios.post(`${process.env.API_BASE}/signin`, data, config);
+      const { data: resultData } = result;
+      console.log(resultData);
+      if (!resultData.success) {
+        document
+          .querySelector("#form_error_success")
+          .setAttribute("style", "display: block");
+        document.querySelector("#form_error_success p").innerHTML =
+          resultData.message;
+      } else {
+        //   redirect user to dasshboard to create/join organization.
+        this.$router.push({ path: "dashboard" });
+      }
     }
   }
 };

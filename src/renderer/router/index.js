@@ -14,6 +14,11 @@ export default new Router({
       path: '/signup',
       name: 'signup-page',
       component: require('@/components/SignupPage').default
+    },
+    {
+      path: '/dashboard',
+      name: 'dashboard',
+      component: require('@/components/Dashboard').default
     }
   ]
 })

@@ -1,6 +1,6 @@
 <template>
     <div class="ui very padded segment" id="create_org">
-	<router-link to="/dashboard">Back</router-link>
+        <router-link to="/dashboard">Back</router-link>
 		<div class="ui header">Create organization</div>
         <div class="ui message" style="display: none" id="create_org_message">
             <i class="close icon"></i>
@@ -18,9 +18,6 @@
 			</div>
 			<div class="ui submit button" v-on:click="submit">Submit</div>
 		</div>
-
-        <!-- TODO:// move the message box to top -->
-
 	</div>
 </template>
 
@@ -38,6 +35,7 @@ export default {
 			event.preventDefault();
 			const user = store.get("user");
 			const userId = user.uuid;
+            console.log(`Creating org. passing admin uuid: ${userId}`);
 
 			const data = {
 				name: document.querySelector('input[name="organization_name"]').value,
@@ -71,7 +69,10 @@ export default {
 				$("#create_org_message").css("display", "block");
 				$("#create_org_message").addClass("positive");
 				$("#create_org_message .header").html("Success");
-				$("#create_org_message p").html(resultData.message + '. Please check the Manage section to manage the organization.');
+				$("#create_org_message p").html(
+					resultData.message +
+						". Please check the Manage section to manage the organization."
+				);
 
 				setTimeout(() => {
 					$("#create_org_message").css("display", "none");

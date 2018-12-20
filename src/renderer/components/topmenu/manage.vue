@@ -2,6 +2,7 @@
     <div class="ui very padded segment">
         <router-link to="/dashboard">Back</router-link>
         <div class="ui header">Manage Organizations</div>
+        <topmenu></topmenu>
         <div v-for="(organization, index) in organizations" v-bind:key="index">
             <div class="ui segment">
                 <p>{{ organization.name }}</p>
@@ -15,19 +16,23 @@
 require("dotenv").config();
 import axios from "axios";
 import Store from "electron-store";
+import topmenu from './topmenu';
 
 const store = new Store();
 
 export default {
-	name: "manage-org",
+    name: "manage-org",
+    components: {
+        topmenu
+    },
 	async mounted() {
-		await this.getData();
-	},
+        this.organizations = await this.getData();
+    },
 	data() {
 		return {
 			organizations: null
 		};
-	},
+    },
 	methods: {
 		async getData() {
 			const config = {
@@ -41,8 +46,8 @@ export default {
 			if (!resultData.success) {
 				console.log(`>>> Error: ${resultData.message}`);
 			}
-			console.log(`>>> Success: ${JSON.stringify(resultData)}`);
-			this.organizations = resultData.data;
+            console.log(`>>> Success loading orgs`);
+            return resultData.data;
 		}
 	}
 };

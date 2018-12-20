@@ -19,6 +19,16 @@ export default new Router({
       path: '/dashboard',
       name: 'dashboard',
       component: require('@/components/Dashboard').default
+    },
+    {
+      path: '/create',
+      name: 'create-org',
+      component: require('@/components/topmenu/create').default
+    },
+    {
+      path: '/manage',
+      name: 'manage-org',
+      component: require('@/components/topmenu/manage').default
     }
   ]
 })

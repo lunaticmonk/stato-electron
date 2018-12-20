@@ -36,32 +36,30 @@ import axios from "axios";
 require("dotenv").config();
 
 export default {
-  name: "signup-page",
-  methods: {
-    async submit(event) {
-      event.preventDefault();
-      const data = {
-        email: document.querySelector('input[name="email"]').value,
-        password: document.querySelector('input[name="password"]').value,
-        first_name: document.querySelector('input[name="first_name"]').value,
-        last_name: document.querySelector('input[name="last_name"]').value
-      };
-      const result = await axios.post(`${process.env.API_BASE}/signup`, data);
-      const { data: resultData } = result;
-      if (!resultData.success) {
-        document
-          .querySelector("#form_error_success")
-          .setAttribute("style", "display: block");
-        document.querySelector("#form_error_success p").innerHTML =
-          resultData.message;
-      } else {
-        //   redirect user to dasshboard to create/join organization.
-        // store the accessToken.
-        localStorage.setItem('x-access-token', resultData.token);
-        this.$router.push({ path: "dashboard" });
-      }
-    }
-  }
+	name: "signup-page",
+	methods: {
+		async submit(event) {
+			event.preventDefault();
+			const data = {
+				email: document.querySelector('input[name="email"]').value,
+				password: document.querySelector('input[name="password"]').value,
+				first_name: document.querySelector('input[name="first_name"]').value,
+				last_name: document.querySelector('input[name="last_name"]').value
+			};
+			const result = await axios.post(`${process.env.API_BASE}/signup`, data);
+			const { data: resultData } = result;
+			if (!resultData.success) {
+				document
+					.querySelector("#form_error_success")
+					.setAttribute("style", "display: block");
+				document.querySelector("#form_error_success p").innerHTML =
+					resultData.message;
+			} else {
+				// redirect the user to login.
+				this.$router.push({ path: "/" });
+			}
+		}
+	}
 };
 </script>
 

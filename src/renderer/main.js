@@ -3,9 +3,12 @@ import axios from 'axios'
 
 import App from './App'
 import router from './router'
-import store from './store'
+// TODO:// remove the store provided by vue-electron.
+// import store from './store'
 
-import 'semantic-ui-css/semantic.min.css';
+import '../../bower_components/jquery/dist/jquery.min.js';
+import '../../bower_components/semantic/dist/semantic.min.css';
+import '../../bower_components/semantic/dist/semantic.min.js';
 
 if (!process.env.IS_WEB) Vue.use(require('vue-electron'))
 Vue.http = Vue.prototype.$http = axios
@@ -15,6 +18,5 @@ Vue.config.productionTip = false
 new Vue({
   components: { App },
   router,
-  store,
   template: '<App/>'
 }).$mount('#app')

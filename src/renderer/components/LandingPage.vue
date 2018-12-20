@@ -26,6 +26,10 @@
 <script>
 import CustomHeader from "./CustomHeader";
 import axios from "axios";
+import Store from 'electron-store';
+
+const store = new Store();
+
 require("dotenv").config();
 
 export default {
@@ -39,10 +43,12 @@ export default {
         password: document.querySelector('input[name="password"]').value
       };
 
+      // getItem from store here.
+      // TODO:// remove below config since it is not used.
       const config = {
-        headers: { 'x-access-token': localStorage.getItem('x-access-token') }
+        headers: { 'x-access-token': store.get('x-access-token') }
       };
-      const result = await axios.post(`${process.env.API_BASE}/signin`, data, config);
+      const result = await axios.post(`${process.env.API_BASE}/signin`, data);
       const { data: resultData } = result;
       console.log(resultData);
       if (!resultData.success) {
@@ -53,6 +59,8 @@ export default {
           resultData.message;
       } else {
         //   redirect user to dasshboard to create/join organization.
+        store.set('x-access-token', resultData.data.accessToken);
+        store.set('user', resultData.data.user);
         this.$router.push({ path: "dashboard" });
       }
     }

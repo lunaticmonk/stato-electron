@@ -1,7 +1,8 @@
 <template>
     <div class="ui very padded segment" id="create_org">
-        <router-link to="/dashboard">Back</router-link>
+        <!-- <router-link to="/dashboard">Back</router-link> -->
 		<div class="ui header">Create organization</div>
+        <topmenu></topmenu>
         <div class="ui message" style="display: none" id="create_org_message">
             <i class="close icon"></i>
             <div class="header"></div>
@@ -25,11 +26,15 @@
 require("dotenv").config();
 import axios from "axios";
 import Store from "electron-store";
+import topmenu from './topmenu';
 
 const store = new Store();
 
 export default {
-	name: "create-org",
+    name: "create-org",
+    components: {
+        topmenu
+    },
 	methods: {
 		async submit(event) {
 			event.preventDefault();

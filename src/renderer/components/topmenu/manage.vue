@@ -1,6 +1,6 @@
 <template>
     <div class="ui very padded segment">
-        <router-link to="/dashboard">Back</router-link>
+        <!-- <router-link to="/dashboard">Back</router-link> -->
         <div class="ui header">Manage Organizations</div>
         <topmenu></topmenu>
         <div v-for="(organization, index) in organizations" v-bind:key="index">

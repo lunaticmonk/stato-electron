@@ -1,6 +1,6 @@
 <template>
     <div class="ui very padded segment">
-        <router-link to="/dashboard">Back</router-link>
+        <!-- <router-link to="/dashboard">Back</router-link> -->
         <div class="ui header">Join Organization</div>
         <topmenu></topmenu>
 

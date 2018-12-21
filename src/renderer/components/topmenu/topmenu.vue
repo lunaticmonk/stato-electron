@@ -3,7 +3,7 @@
 		<a class="item" v-on:click="handleRouting">Home</a>
 		<a class="item" v-on:click="handleRouting" name="create">Create</a>
 		<a class="item" v-on:click="handleRouting" name="manage">Manage</a>
-		<a class="item" v-on:click="handleRouting">Join</a>
+		<a class="item" v-on:click="handleRouting" name="join">Join</a>
 	</div>
 </template>
 
@@ -21,6 +21,10 @@ export default {
 				case "manage":
 					$(event.target).addClass("active");
 					this.$router.push({ path: "/manage" });
+					break;
+				case "join":
+					$(event.target).addClass("active");
+					this.$router.push({ path: "/join" });
 					break;
 				default:
 					this.$router.push({ path: "/dashboard" });

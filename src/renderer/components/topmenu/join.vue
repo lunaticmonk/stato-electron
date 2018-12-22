@@ -46,9 +46,9 @@ export default {
 			};
 			const user = store.get("user");
 			const data = {
-				email: user.email,
+				uuid: user.uuid,
 				invite_key: $("input[name='organization_invite_key']").val()
-			};
+            };
 			const result = await axios.post(
 				`${process.env.API_BASE}/organizations/join`,
 				data,

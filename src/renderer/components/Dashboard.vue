@@ -1,12 +1,12 @@
 <template>
 <div class="ui very padded segment">
-	<h2 class="ui header">Dashboard</h2>
+	<div class="ui header">Dashboard</div>
 	<topmenu></topmenu>
 </div>
 </template>
 
 <script>
-import topmenu from './topmenu/topmenu';
+import topmenu from "./topmenu/topmenu";
 
 export default {
 	name: "signup-page",

@@ -34,6 +34,11 @@ export default new Router({
       path: '/join',
       name: 'join-org',
       component: require('@/components/topmenu/join').default
+    },
+    {
+      path: '/organization',
+      name: 'organization',
+      component: require('@/components/topmenu/organization').default
     }
   ]
 })

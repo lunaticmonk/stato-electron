@@ -7,6 +7,7 @@
             <div class="ui segment">
                 <p>{{ organization.name }}</p>
                 <p>{{ organization.url }}</p>
+                <button class="ui button" v-on:click="showOrganizationDetail(organization)">View Details</button>
             </div>
         </div>
     </div>
@@ -16,23 +17,23 @@
 require("dotenv").config();
 import axios from "axios";
 import Store from "electron-store";
-import topmenu from './topmenu';
+import topmenu from "./topmenu";
 
 const store = new Store();
 
 export default {
-    name: "manage-org",
-    components: {
-        topmenu
-    },
+	name: "manage-org",
+	components: {
+		topmenu
+	},
 	async mounted() {
-        this.organizations = await this.getData();
-    },
+		this.organizations = await this.getData();
+	},
 	data() {
 		return {
 			organizations: null
 		};
-    },
+	},
 	methods: {
 		async getData() {
 			const config = {
@@ -46,8 +47,15 @@ export default {
 			if (!resultData.success) {
 				console.log(`>>> Error: ${resultData.message}`);
 			}
-            console.log(`>>> Success loading orgs`);
-            return resultData.data;
+			console.log(`>>> Success loading orgs`);
+			return resultData.data;
+		},
+
+		showOrganizationDetail(organization) {
+			this.$router.push({
+                name: "organization",
+				params: { uuid: organization.uuid }
+			});
 		}
 	}
 };

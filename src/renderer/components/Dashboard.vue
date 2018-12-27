@@ -1,10 +1,10 @@
 <template>
 <div class="ui very padded segment">
 	<div class="ui grid">
-		<div class="ui header eight wide column">Dashboard</div>
+		<div class="ui header six wide column">Dashboard</div>
 		<div class="ui six wide column">
-			<select class="ui dropdown" @change="switchCurrentOrganization">
-				<option value="">Organization</option>
+			<select class="ui dropdown" @change="switchCurrentOrganization" v-model="currentOrganization">
+				<option disabled>Organization</option>
 				<option v-for="(organization, index) in organizations" v-bind:key="index" :value="organization.uuid">
 					{{ organization.name }}
 				</option>
@@ -14,15 +14,26 @@
 	<topmenu></topmenu>
 
 	<!-- search bar. change layout of whole page -->
-	<div class="ui category search">
-		<div class="ui icon input">
-			<input class="prompt" type="text" placeholder="Search members..." v-on:change="searchMembers">
+	<div class="ui segment">
+		<div class="ui icon input" style="width: 100%;">
+			<input type="text" placeholder="Search members..." v-on:change="searchMembers">
 			<i class="search icon"></i>
 		</div>
 		<div class="results"></div>
 	</div>
 
+	<div class="ui segment">
+		<select class="ui dropdown" @change="updateStatus">
+			<option value="">Status</option>
+			<option value="online">online</option>
+			<option value="inactive">inactive</option>
+			<option value="working">working</option>
+			<option value="detox">detox</option>
+		</select>
+	</div>
+
 	<!-- member list -->
+	<div class="ui header">Members</div>
 	<div v-for="(member, index) in members" v-bind:key="index" class="ui segment">
 		<div class="ui grid">
 			<span class="ten wide column">{{ member.first_name }} {{ member.last_name }}</span>
@@ -47,17 +58,19 @@ export default {
 	data() {
 		return {
 			organizations: null,
-			members: null
+			members: null,
+			currentOrganization: ""
 		};
 	},
 	async mounted() {
 		this.organizations = await this.getOrganizations();
 		this.members = await this.getOrganizationMembers();
+		this.currentOrganization = store.get('currentOrganizationId');
 	},
 	methods: {
 		async switchCurrentOrganization(event) {
 			console.log(event.target.value);
-			store.set('currentOrganizationId', event.target.value);
+			store.set("currentOrganizationId", event.target.value);
 			this.members = await this.getOrganizationMembers();
 		},
 		async getOrganizations() {
@@ -82,7 +95,9 @@ export default {
 			};
 			const currentOrganizationId = store.get("currentOrganizationId");
 			const result = await axios.get(
-				`${process.env.API_BASE}/organizations/${currentOrganizationId}/members`,
+				`${
+					process.env.API_BASE
+				}/organizations/${currentOrganizationId}/members`,
 				config
 			);
 			const { data: resultData } = result;
@@ -100,11 +115,40 @@ export default {
 			};
 			const currentOrganizationId = store.get("currentOrganizationId");
 			const result = await axios.get(
-				`${process.env.API_BASE}/organizations/${currentOrganizationId}/members?name=${query}`,
+				`${
+					process.env.API_BASE
+				}/organizations/${currentOrganizationId}/members?name=${query}`,
 				config
 			);
 			const { data: resultData } = result;
 			this.members = resultData.data;
+		},
+		async updateStatus(event) {
+			const config = {
+				headers: { "x-access-token": store.get("x-access-token") }
+			};
+
+			const currentUser = store.get("user");
+			const currentUserId = currentUser.uuid;
+			const currentOrganizationId = store.get("currentOrganizationId");
+			const status = event.target.value;
+
+			const data = {
+				user_id: currentUserId,
+				organization_id: currentOrganizationId,
+				status
+			};
+			console.log(data);
+			const result = await axios.post(
+				`${process.env.API_BASE}/status/update`,
+				data,
+				config
+			);
+			const { data: resultData } = result;
+
+			if (resultData.success) {
+				console.log(`Status updated`);
+			}
 		}
 	}
 };

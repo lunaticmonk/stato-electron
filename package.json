@@ -53,6 +53,7 @@
   "dependencies": {
     "axios": "^0.18.0",
     "electron-store": "^2.0.0",
+    "moment": "^2.23.0",
     "semantic-ui-css": "^2.4.1",
     "vue": "^2.5.16",
     "vue-electron": "^1.0.6",

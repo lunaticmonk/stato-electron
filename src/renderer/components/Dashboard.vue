@@ -34,12 +34,13 @@
 	</div>
 
 	<!-- member list -->
-	<div class="ui header">Members</div>
+	<div class="ui header">Members <span data-tooltip="Refresh"><i class="refresh icon" v-on:click="refreshMembers"></i></span></div>
 	<div v-for="(member, index) in members" v-bind:key="index" class="ui segment">
 		<div class="ui grid">
 			<span class="ten wide column">{{ member.first_name }} {{ member.last_name }}</span>
 			<span class="five wide column right floated">
-				<span v-bind:class="getLabelClass(member.status)">{{ member.status }}
+				<!-- TODO:// Add a function to get formatted date and time. -->
+				<span v-bind:class="getLabelClass(member.status)" v-bind:data-tooltip="moment(member.statusUpdatedAt).format('Do MMM YYYY HH:MM:SS')" v-bind:data-position="'left center'">{{ member.status }}
 				</span>
 			</span>
 		</div>
@@ -90,6 +91,9 @@ export default {
 			};
 
 			return `ui label ${statusClassMapping[status]}`;
+		},
+		async refreshMembers() {
+			this.members = await this.getOrganizationMembers();
 		},
 		async switchCurrentOrganization(event) {
 			store.set("currentOrganizationId", event.target.value);

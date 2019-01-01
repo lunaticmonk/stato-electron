@@ -5,13 +5,15 @@
         <!-- <div class="ui header">Manage Organization</div> -->
         <router-link to="/manage">Back</router-link>
         <!-- <topmenu></topmenu> -->
+		<div class="ui hidden divider"></div>
 		<div>
 			<div class="ui header">
-				Organization Members
+				{{ this.$route.params.organizationName }}
 			</div>
 			<div class="ui message" id="delete_member_message" style="display:none;">
 				<p></p>
 			</div>
+			<div class="ui header">Members</div>
 			<div v-for="(member, index) in members" v-bind:key="index" class="ui segment">
 				<div>
 					{{ member.first_name }} {{ member.last_name }}

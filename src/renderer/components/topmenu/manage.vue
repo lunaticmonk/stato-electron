@@ -54,7 +54,7 @@ export default {
 		showOrganizationDetail(organization) {
 			this.$router.push({
                 name: "organization",
-				params: { uuid: organization.uuid }
+				params: { uuid: organization.uuid, organizationName: organization.name }
 			});
 		}
 	}

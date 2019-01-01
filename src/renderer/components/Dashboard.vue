@@ -13,6 +13,17 @@
 	</div>
 	<topmenu></topmenu>
 
+	<div class="ui segment">
+		<h4>Your status: </h4>
+		<select class="ui dropdown" @change="updateStatus"  v-model="currentOrganizationStatus.status">
+			<option value="">Status</option>
+			<option value="online">online</option>
+			<option value="inactive">inactive</option>
+			<option value="working">working</option>
+			<option value="detox">detox</option>
+		</select>
+	</div>
+
 	<!-- search bar. change layout of whole page -->
 	<div class="ui segment">
 		<div class="ui icon input" style="width: 100%;">
@@ -22,22 +33,15 @@
 		<div class="results"></div>
 	</div>
 
-	<div class="ui segment">
-		<select class="ui dropdown" @change="updateStatus">
-			<option value="">Status</option>
-			<option value="online">online</option>
-			<option value="inactive">inactive</option>
-			<option value="working">working</option>
-			<option value="detox">detox</option>
-		</select>
-	</div>
-
 	<!-- member list -->
 	<div class="ui header">Members</div>
 	<div v-for="(member, index) in members" v-bind:key="index" class="ui segment">
 		<div class="ui grid">
 			<span class="ten wide column">{{ member.first_name }} {{ member.last_name }}</span>
-			<span class="four wide column right floated"><span class="ui label green">{{ member.status }}</span></span>
+			<span class="five wide column right floated">
+				<span v-bind:class="getLabelClass(member.status)">{{ member.status }}
+				</span>
+			</span>
 		</div>
 	</div>
 </div>
@@ -59,19 +63,38 @@ export default {
 		return {
 			organizations: null,
 			members: null,
-			currentOrganization: ""
+			currentOrganization: "",
+			currentOrganizationStatus: {}
 		};
 	},
 	async mounted() {
 		this.organizations = await this.getOrganizations();
 		this.members = await this.getOrganizationMembers();
-		this.currentOrganization = store.get('currentOrganizationId');
+		this.currentOrganization = store.get("currentOrganizationId");
+		this.setStatusAccToOrganization();
 	},
 	methods: {
+		setStatusAccToOrganization() {
+			const currentUserStatuses = store.get("currentUserStatuses");
+			let currentOrganizationStatus = currentUserStatuses.find(userStatus => {
+				return userStatus.organizationId === this.currentOrganization;
+			});
+			this.currentOrganizationStatus = currentOrganizationStatus;
+		},
+		getLabelClass(status) {
+			const statusClassMapping = {
+				online: "green",
+				detox: "blue",
+				inactive: "yellow",
+				working: "red"
+			};
+
+			return `ui label ${statusClassMapping[status]}`;
+		},
 		async switchCurrentOrganization(event) {
-			console.log(event.target.value);
 			store.set("currentOrganizationId", event.target.value);
 			this.members = await this.getOrganizationMembers();
+			this.setStatusAccToOrganization();
 		},
 		async getOrganizations() {
 			const config = {
@@ -138,7 +161,6 @@ export default {
 				organization_id: currentOrganizationId,
 				status
 			};
-			console.log(data);
 			const result = await axios.post(
 				`${process.env.API_BASE}/status/update`,
 				data,
@@ -146,8 +168,42 @@ export default {
 			);
 			const { data: resultData } = result;
 
+			/**
+			 * Update store with the org-status mapping.
+			 *
+			 */
+
+			let currentUserStatuses = store.get("currentUserStatuses");
+
 			if (resultData.success) {
-				console.log(`Status updated`);
+				if (currentUserStatuses === undefined) {
+					store.set("currentUserStatuses", []);
+				}
+
+				let currentOrganizationStatus = currentUserStatuses.find(userStatus => {
+					return userStatus.organizationId === currentOrganizationId;
+				});
+
+				if (currentOrganizationStatus !== undefined) {
+					let indexOfCurrentOrganizationStatus = currentUserStatuses.indexOf(
+						currentOrganizationStatus
+					);
+					currentUserStatuses[indexOfCurrentOrganizationStatus] = {
+						organizationId: currentOrganizationId,
+						status: resultData.data.status
+					};
+				} else {
+					currentUserStatuses.push({
+						organizationId: currentOrganizationId,
+						status: resultData.data.status
+					});
+				}
+				store.set("currentUserStatuses", currentUserStatuses);
+				console.log(
+					`>>> Updated store: ${JSON.stringify(
+						store.get("currentUserStatuses")
+					)}`
+				);
 			}
 		}
 	}

@@ -26,21 +26,22 @@
 require("dotenv").config();
 import axios from "axios";
 import Store from "electron-store";
-import topmenu from './topmenu';
+import topmenu from "./topmenu";
+import { updateUserOrgStatus } from "../../utils";
 
 const store = new Store();
 
 export default {
-    name: "create-org",
-    components: {
-        topmenu
-    },
+	name: "create-org",
+	components: {
+		topmenu
+	},
 	methods: {
 		async submit(event) {
 			event.preventDefault();
 			const user = store.get("user");
 			const userId = user.uuid;
-            console.log(`Creating org. passing admin uuid: ${userId}`);
+			console.log(`Creating org. passing admin uuid: ${userId}`);
 
 			const data = {
 				name: document.querySelector('input[name="organization_name"]').value,
@@ -70,7 +71,11 @@ export default {
 			} else {
 				console.log(resultData.data);
 				// org created. next.
-				console.log(`Org created: ${resultData.data}`);
+
+				// update store
+				updateUserOrgStatus(resultData.data.uuid, "online");
+
+				// TODO:// clean following code.
 				$("#create_org_message").css("display", "block");
 				$("#create_org_message").addClass("positive");
 				$("#create_org_message .header").html("Success");

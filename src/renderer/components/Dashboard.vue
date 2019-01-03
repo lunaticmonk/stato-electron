@@ -11,6 +11,7 @@
 			</select>
 		</div>
 	</div>
+
 	<topmenu></topmenu>
 
 	<div class="ui segment">
@@ -22,6 +23,7 @@
 			<option value="working">working</option>
 			<option value="detox">detox</option>
 		</select>
+		<button class="ui small button right floated" v-on:click="logout">Logout</button>
 	</div>
 
 	<!-- search bar. change layout of whole page -->
@@ -34,7 +36,7 @@
 	</div>
 
 	<!-- member list -->
-	<div class="ui header">Members <span data-tooltip="Refresh"><i class="refresh icon" v-on:click="refreshMembers"></i></span></div>
+	<div class="ui header">Members <span data-tooltip="Refresh" class="right floated"><i class="refresh icon" v-on:click="refreshMembers" style="cursor: pointer;"></i></span></div>
 	<div v-for="(member, index) in members" v-bind:key="index" class="ui segment">
 		<div class="ui grid">
 			<span class="ten wide column">{{ member.first_name }} {{ member.last_name }}</span>
@@ -71,12 +73,23 @@ export default {
 	async mounted() {
 		this.organizations = await this.getOrganizations();
 		this.members = await this.getOrganizationMembers();
+		// if user has just joined an organization, set currentOrganizationId to that.
 		this.currentOrganization = store.get("currentOrganizationId");
+		// TODO:// throwing error after render due to state issues.
 		this.setStatusAccToOrganization();
 	},
 	methods: {
+		logout() {
+			store.set("x-access-token", "");
+			store.set("user", {});
+			store.set("currentOrganizationId", "");
+			store.set("currentUserStatuses", []);
+			this.$router.push({ path: '/' });
+		},
 		setStatusAccToOrganization() {
 			const currentUserStatuses = store.get("currentUserStatuses");
+			console.log(currentUserStatuses);
+			// check if only one org. default to that.
 			let currentOrganizationStatus = currentUserStatuses.find(userStatus => {
 				return userStatus.organizationId === this.currentOrganization;
 			});

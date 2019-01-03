@@ -25,6 +25,7 @@ require("dotenv").config();
 import axios from "axios";
 import Store from "electron-store";
 import topmenu from "./topmenu";
+import { updateUserOrgStatus } from '../../utils';
 
 const store = new Store();
 
@@ -48,7 +49,7 @@ export default {
 			const data = {
 				uuid: user.uuid,
 				invite_key: $("input[name='organization_invite_key']").val()
-            };
+			};
 			const result = await axios.post(
 				`${process.env.API_BASE}/organizations/join`,
 				data,
@@ -56,12 +57,22 @@ export default {
 			);
 			const { data: resultData } = result;
 			if (resultData.success) {
+                // here result data is sending user password too.
+                // modify the api to return user public info only.
+
+                console.log(resultData);
+
+				store.set('currentOrganizationId', resultData.data.organization_id);
+				updateUserOrgStatus(resultData.data.organization_id, "online");
+
 				$("#join_org_message")
 					.css("display", "block")
 					.addClass("success");
 				$("#join_org_message p").html(resultData.message);
 				setTimeout(() => {
-					$("#join_org_message").removeClass("success").css("display", "none");
+					$("#join_org_message")
+						.removeClass("success")
+						.css("display", "none");
 				}, 2000);
 			} else {
 				$("#join_org_message")
@@ -69,7 +80,9 @@ export default {
 					.addClass("error");
 				$("#join_org_message p").html(resultData.message);
 				setTimeout(() => {
-					$("#join_org_message").removeClass("error").css("display", "none");
+					$("#join_org_message")
+						.removeClass("error")
+						.css("display", "none");
 				}, 2000);
 			}
 		}

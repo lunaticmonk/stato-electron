@@ -36,7 +36,7 @@
 	</div>
 
 	<!-- member list -->
-	<div class="ui header">Members <span data-tooltip="Refresh" class="right floated"><i class="refresh icon" v-on:click="refreshMembers" style="cursor: pointer;"></i></span></div>
+	<div class="ui header">Members <span data-tooltip="Refresh" class="right floated"><i class="refresh icon" id="refreshButton" v-on:click="refreshMembers" style="cursor: pointer;"></i></span></div>
 	<div v-for="(member, index) in members" v-bind:key="index" class="ui segment">
 		<div class="ui grid">
 			<span class="ten wide column">{{ member.first_name }} {{ member.last_name }}</span>
@@ -54,6 +54,7 @@
 import topmenu from "./topmenu/topmenu";
 import axios from "axios";
 import Store from "electron-store";
+import { updateUserState } from "../utils";
 
 const store = new Store();
 
@@ -66,34 +67,35 @@ export default {
 		return {
 			organizations: null,
 			members: null,
-			currentOrganization: "",
+			currentOrganization: null,
 			currentOrganizationStatus: {}
 		};
 	},
 	async mounted() {
 		this.organizations = await this.getOrganizations();
+		this.currentOrganization = store.get("currentOrganizationId") ? store.get("currentOrganizationId") : this.organizations[0].uuid;
+		store.set("currentOrganizationId", this.currentOrganization);
 		this.members = await this.getOrganizationMembers();
-		// if user has just joined an organization, set currentOrganizationId to that.
-		this.currentOrganization = store.get("currentOrganizationId");
-		// TODO:// throwing error after render due to state issues.
 		this.setStatusAccToOrganization();
 	},
 	methods: {
 		logout() {
+			const currentUser = store.get("user");
+			updateUserState(currentUser.uuid);
 			store.set("x-access-token", "");
 			store.set("user", {});
 			store.set("currentOrganizationId", "");
 			store.set("currentUserStatuses", []);
-			this.$router.push({ path: '/' });
+			this.$router.push({ path: "/" });
 		},
 		setStatusAccToOrganization() {
-			const currentUserStatuses = store.get("currentUserStatuses");
+			const currentUserStatuses = store.get("currentUserStatuses") ? store.get("currentUserStatuses") : [];
 			console.log(currentUserStatuses);
 			// check if only one org. default to that.
 			let currentOrganizationStatus = currentUserStatuses.find(userStatus => {
 				return userStatus.organizationId === this.currentOrganization;
 			});
-			this.currentOrganizationStatus = currentOrganizationStatus;
+			this.currentOrganizationStatus = currentOrganizationStatus ? currentOrganizationStatus : {};
 		},
 		getLabelClass(status) {
 			const statusClassMapping = {
@@ -134,6 +136,9 @@ export default {
 				headers: { "x-access-token": store.get("x-access-token") }
 			};
 			const currentOrganizationId = store.get("currentOrganizationId");
+			if (currentOrganizationId === null) {
+				return [];
+			}
 			const result = await axios.get(
 				`${
 					process.env.API_BASE
@@ -193,6 +198,16 @@ export default {
 			let currentUserStatuses = store.get("currentUserStatuses");
 
 			if (resultData.success) {
+				/**
+				 * clicking the refresh button implicitly
+				 * not a good way to do it.
+				 * will only show self updated status. no long polling if other users update their status.
+				 *
+				 * TODO:// long polling for member status.
+				 *
+				 */
+				document.querySelector("#refreshButton").click();
+
 				if (currentUserStatuses === undefined) {
 					store.set("currentUserStatuses", []);
 				}

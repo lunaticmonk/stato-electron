@@ -70,7 +70,7 @@ export default {
 						currentUserSavedState
 					)}`
 				);
-				if (currentUserSavedState) {
+				if (currentUserSavedState && currentUserSavedState.currentUserStatuses) {
 					console.log(`---------------------`);
 					console.log(`currentUserSavedState !null and setting the values`);
 					console.log(`${currentUserSavedState.lastOrganization}`);

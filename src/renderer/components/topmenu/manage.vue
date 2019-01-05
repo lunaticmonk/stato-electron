@@ -1,10 +1,10 @@
 <template>
-    <div class="ui very padded segment">
+    <div class="ui very padded segment" style="background-color: #8f9bff">
         <!-- <router-link to="/dashboard">Back</router-link> -->
-        <div class="ui header">Manage Organizations</div>
+        <div class="ui header" style="color: #0043ca">Manage Organizations</div>
         <topmenu></topmenu>
         <div v-for="(organization, index) in organizations" v-bind:key="index">
-            <div class="ui segment">
+            <div class="ui segment" style="background-color: #536dfe">
                 <p>{{ organization.name }}</p>
                 <p>{{ organization.url }}</p>
                 <button class="ui button" v-on:click="showOrganizationDetail(organization)">View Details</button>

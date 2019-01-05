@@ -1,5 +1,16 @@
 <template>
-<div class="ui very padded segment">
+<div class="ui very padded segment" v-if="newMember">
+	<div class="ui header">Dashboard</div>
+	<topmenu></topmenu>
+	<div class="ui grid stackable">
+		<p class="sixteen wide column">No organizations found.</p>
+		<p class="sixteen wide column">
+			Please join an organization with the invite key obtained from the organization admin.
+		</p>
+		<div class="eight wide column"><button class="ui small button" v-on:click="logout">Logout</button></div>
+	</div>
+</div>
+<div class="ui very padded segment" v-else>
 	<div class="ui grid">
 		<div class="ui header six wide column">Dashboard</div>
 		<div class="ui six wide column">
@@ -48,6 +59,7 @@
 		</div>
 	</div>
 </div>
+
 </template>
 
 <script>
@@ -68,15 +80,27 @@ export default {
 			organizations: null,
 			members: null,
 			currentOrganization: null,
-			currentOrganizationStatus: {}
+			currentOrganizationStatus: {},
+			newMember: false
 		};
 	},
 	async mounted() {
 		this.organizations = await this.getOrganizations();
-		this.currentOrganization = store.get("currentOrganizationId") ? store.get("currentOrganizationId") : this.organizations[0].uuid;
-		store.set("currentOrganizationId", this.currentOrganization);
-		this.members = await this.getOrganizationMembers();
-		this.setStatusAccToOrganization();
+		this.newMember = this.organizations.length > 0 ? false : true;
+
+		/**
+		 * show the dashboard only in case of old user.
+		 * dont show dashboard until the user has joined any organization.
+		 *
+		 */
+		if (!this.newMember) {
+			this.currentOrganization = store.get("currentOrganizationId")
+				? store.get("currentOrganizationId")
+				: this.organizations[0].uuid;
+			store.set("currentOrganizationId", this.currentOrganization);
+			this.members = await this.getOrganizationMembers();
+			this.setStatusAccToOrganization();
+		}
 	},
 	methods: {
 		logout() {
@@ -89,13 +113,17 @@ export default {
 			this.$router.push({ path: "/" });
 		},
 		setStatusAccToOrganization() {
-			const currentUserStatuses = store.get("currentUserStatuses") ? store.get("currentUserStatuses") : [];
+			const currentUserStatuses = store.get("currentUserStatuses")
+				? store.get("currentUserStatuses")
+				: [];
 			console.log(currentUserStatuses);
 			// check if only one org. default to that.
 			let currentOrganizationStatus = currentUserStatuses.find(userStatus => {
 				return userStatus.organizationId === this.currentOrganization;
 			});
-			this.currentOrganizationStatus = currentOrganizationStatus ? currentOrganizationStatus : {};
+			this.currentOrganizationStatus = currentOrganizationStatus
+				? currentOrganizationStatus
+				: {};
 		},
 		getLabelClass(status) {
 			const statusClassMapping = {

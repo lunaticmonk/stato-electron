@@ -19,7 +19,7 @@
 					<label>url</label>
 					<input type="text" placeholder="https://sugarlabs.com" name="url"/>
 				</div>
-				<div class="ui submit button" v-on:click="submit">Submit</div>
+				<div class="ui submit button bg-primary-dark" v-on:click="submit">Submit</div>
 			</div>
 		</div>
 	</div>

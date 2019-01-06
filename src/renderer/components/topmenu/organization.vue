@@ -1,10 +1,6 @@
 <template>
     <div class="ui very padded segment">
-		<!-- put organization name beneath -->
-		<!-- also will need the back router-link here rather than topmenu -->
-        <!-- <div class="ui header">Manage Organization</div> -->
         <router-link to="/manage">Back</router-link>
-        <!-- <topmenu></topmenu> -->
 		<div class="ui hidden divider"></div>
 		<div>
 			<div class="ui header">
@@ -13,11 +9,11 @@
 			<div class="ui message" id="delete_member_message" style="display:none;">
 				<p></p>
 			</div>
-			<div class="ui header">Members</div>
+			<div class="ui small header">Members</div>
 			<div v-for="(member, index) in members" v-bind:key="index" class="ui segment">
 				<div>
 					{{ member.first_name }} {{ member.last_name }}
-					<span><button class="ui mini red button right floated" v-on:click="removeUserFromOrganization(member)">remove</button></span>
+					<span><button class="ui mini bg-red button right floated" v-on:click="removeUserFromOrganization(member)">remove</button></span>
 				</div>
 			</div>
 		</div>

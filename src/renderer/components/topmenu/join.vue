@@ -15,7 +15,7 @@
 					<label>invite key</label>
 					<input type="text" placeholder="607a83a0-86ef-4f4e-ad43-7e5fff7c09d8" name="organization_invite_key"/>
 				</div>
-				<div class="ui submit button" v-on:click="submit">Submit</div>
+				<div class="ui submit button bg-primary-dark" v-on:click="submit">Submit</div>
 			</div>
 		</div>
     </div>

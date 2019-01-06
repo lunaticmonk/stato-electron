@@ -7,7 +7,7 @@
             <div class="ui segment">
                 <p>{{ organization.name }}</p>
                 <p>{{ organization.url }}</p>
-                <button class="ui button" v-on:click="showOrganizationDetail(organization)">View Details</button>
+                <button class="ui button bg-primary-dark" v-on:click="showOrganizationDetail(organization)">View Details</button>
             </div>
 			<div class="ui hidden divider"></div>
         </div>

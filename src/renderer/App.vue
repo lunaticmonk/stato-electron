@@ -20,8 +20,6 @@ export default {
 }
 
 .ui.button {
-	background-color: #4d3f48 !important;
-	color: #fff !important;
 	font-weight: lighter !important;
 	-webkit-box-shadow: 2px 2px 20px 2px rgba(141, 132, 138, 0.5) !important;
 	-moz-box-shadow: 2px 2px 20px 2px rgba(141, 132, 138, 0.5) !important;
@@ -73,5 +71,14 @@ export default {
 
 .bg-primary {
 	background-color: #f8f0f8 !important;
+}
+
+.bg-primary-dark {
+	background-color: #4d3f48 !important;
+	color: #fff !important;
+}
+
+.bg-red {
+	background-color: rgba(220, 92, 92, 0.46) !important;
 }
 </style>

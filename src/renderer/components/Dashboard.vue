@@ -14,7 +14,7 @@
 	<div class="ui grid">
 		<div class="ui header six wide column">Dashboard</div>
 		<div class="ui five wide column right floated">
-			<button class="ui small button" v-on:click="logout">Logout</button>
+			<button class="ui small button bg-primary-dark" v-on:click="logout">Logout</button>
 		</div>
 	</div>
 	<topmenu></topmenu>

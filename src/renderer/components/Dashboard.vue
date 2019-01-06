@@ -7,7 +7,7 @@
 		<p class="sixteen wide column">
 			Please join an organization with the invite key obtained from the organization admin.
 		</p>
-		<div class="eight wide column"><button class="ui small button" v-on:click="logout">Logout</button></div>
+		<div class="eight wide column"><button class="ui small button bg-primary-dark" v-on:click="logout">Logout</button></div>
 	</div>
 </div>
 <div class="ui very padded segment" v-else>

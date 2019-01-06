@@ -1,7 +1,7 @@
 <template>
 <div id="landing">
   <div class="ui hidden divider"></div>
-    <div class="ui raised very padded text container segment">
+    <div class="ui raised very padded text container segment bg-primary">
       <h2 class="ui header">Login</h2>
       <div class="ui form success">
         <div class="field">
@@ -16,9 +16,9 @@
           <div class="header">Error</div>
           <p></p>
         </div>
-        <div class="ui submit button" v-on:click="submit">Submit</div>
+        <div class="ui submit button bg-primary-dark" v-on:click="submit">Submit</div>
         <p>Don't have an account. Sign up <router-link to="/signup">here</router-link></p>
-        <p v-on:click="clearSavedStates" class="ui button">Clear saved states</p>
+        <!-- <p v-on:click="clearSavedStates" class="ui button">Clear saved states</p> -->
       </div>
     </div>
 </div>

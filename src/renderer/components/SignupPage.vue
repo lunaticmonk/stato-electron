@@ -1,7 +1,7 @@
 <template>
   <div id="signup">
   <div class="ui hidden divider"></div>
-    <div class="ui raised very padded text container segment">
+    <div class="ui raised very padded text container segment bg-primary">
       <h2 class="ui header">Sign up</h2>
       <div class="ui form success" id="signupform">
         <div class="field">
@@ -24,7 +24,7 @@
           <div class="header">Error</div>
           <p></p>
         </div>
-        <div class="ui submit button" v-on:click="submit">Submit</div>
+        <div class="ui submit button bg-primary-dark" v-on:click="submit">Submit</div>
         <p>Already have an account?. Log in <router-link to="/">here</router-link></p>
       </div>
     </div>

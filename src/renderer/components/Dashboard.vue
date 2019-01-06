@@ -13,20 +13,14 @@
 <div class="ui very padded segment" v-else>
 	<div class="ui grid">
 		<div class="ui header six wide column">Dashboard</div>
-		<div class="ui six wide column">
-			<select class="ui dropdown" @change="switchCurrentOrganization" v-model="currentOrganization">
-				<option disabled>Organization</option>
-				<option v-for="(organization, index) in organizations" v-bind:key="index" :value="organization.uuid">
-					{{ organization.name }}
-				</option>
-			</select>
+		<div class="ui five wide column right floated">
+			<button class="ui small button" v-on:click="logout">Logout</button>
 		</div>
 	</div>
-
 	<topmenu></topmenu>
 
 	<div class="ui segment">
-		<h4>Your status: </h4>
+		<h4>Status | Organization</h4>
 		<select class="ui dropdown" @change="updateStatus"  v-model="currentOrganizationStatus.status">
 			<option value="">Status</option>
 			<option value="online">online</option>
@@ -34,16 +28,20 @@
 			<option value="working">working</option>
 			<option value="detox">detox</option>
 		</select>
-		<button class="ui small button right floated" v-on:click="logout">Logout</button>
+		<select class="ui dropdown" @change="switchCurrentOrganization" v-model="currentOrganization">
+			<option disabled>Organization</option>
+			<option v-for="(organization, index) in organizations" v-bind:key="index" :value="organization.uuid">
+				{{ organization.name }}
+			</option>
+		</select>
 	</div>
 
 	<!-- search bar. change layout of whole page -->
-	<div class="ui segment">
+	<div class="ui segment bg-primary">
 		<div class="ui icon input" style="width: 100%;">
 			<input type="text" placeholder="Search members..." v-on:change="searchMembers">
 			<i class="search icon"></i>
 		</div>
-		<div class="results"></div>
 	</div>
 
 	<!-- member list -->
@@ -127,10 +125,10 @@ export default {
 		},
 		getLabelClass(status) {
 			const statusClassMapping = {
-				online: "green",
-				detox: "blue",
-				inactive: "yellow",
-				working: "red"
+				online: "bg-green",
+				detox: "bg-blue",
+				inactive: "bg-yellow",
+				working: "bg-red"
 			};
 
 			return `ui label ${statusClassMapping[status]}`;

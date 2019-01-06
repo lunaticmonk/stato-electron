@@ -3,21 +3,24 @@
         <!-- <router-link to="/dashboard">Back</router-link> -->
 		<div class="ui header">Create organization</div>
         <topmenu></topmenu>
-        <div class="ui message" style="display: none" id="create_org_message">
-            <i class="close icon"></i>
-            <div class="header"></div>
-            <p></p>
-        </div>
-		<div class="ui form padded">
-			<div class="field">
-				<label>name</label>
-				<input type="text" placeholder="Sugar Labs" name="organization_name"/>
+
+		<div class="ui segment bg-primary">
+			<div class="ui message" style="display: none" id="create_org_message">
+				<i class="close icon"></i>
+				<div class="header"></div>
+				<p></p>
 			</div>
-			<div class="field">
-				<label>url</label>
-				<input type="text" placeholder="https://sugarlabs.com" name="url"/>
+			<div class="ui form padded">
+				<div class="field">
+					<label>name</label>
+					<input type="text" placeholder="Sugar Labs" name="organization_name"/>
+				</div>
+				<div class="field">
+					<label>url</label>
+					<input type="text" placeholder="https://sugarlabs.com" name="url"/>
+				</div>
+				<div class="ui submit button" v-on:click="submit">Submit</div>
 			</div>
-			<div class="ui submit button" v-on:click="submit">Submit</div>
 		</div>
 	</div>
 </template>

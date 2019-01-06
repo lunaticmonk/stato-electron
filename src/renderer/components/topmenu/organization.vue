@@ -3,8 +3,12 @@
         <router-link to="/manage">Back</router-link>
 		<div class="ui hidden divider"></div>
 		<div>
-			<div class="ui header">
-				{{ this.$route.params.organizationName }}
+
+			<div class="ui segment">
+				<div class="ui header underline">
+					{{ this.$route.params.organizationName }}
+				</div>
+				<p>Invite key: <code>{{ this.$route.params.inviteKey }}</code></p>
 			</div>
 			<div class="ui message" id="delete_member_message" style="display:none;">
 				<p></p>

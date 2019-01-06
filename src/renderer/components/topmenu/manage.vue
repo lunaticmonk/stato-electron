@@ -55,7 +55,7 @@ export default {
 		showOrganizationDetail(organization) {
 			this.$router.push({
                 name: "organization",
-				params: { uuid: organization.uuid, organizationName: organization.name }
+				params: { uuid: organization.uuid, organizationName: organization.name, inviteKey: organization.invite_key }
 			});
 		}
 	}

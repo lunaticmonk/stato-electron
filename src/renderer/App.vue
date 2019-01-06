@@ -19,8 +19,13 @@ export default {
 	font-family: "Ubuntu", sans-serif;
 }
 
+.ui.header {
+	font-family: "Ubuntu", sans-serif !important;
+}
+
 .ui.button {
 	font-weight: lighter !important;
+	font-family: "Ubuntu", sans-serif !important;
 	-webkit-box-shadow: 2px 2px 20px 2px rgba(141, 132, 138, 0.5) !important;
 	-moz-box-shadow: 2px 2px 20px 2px rgba(141, 132, 138, 0.5) !important;
 	box-shadow: 2px 2px 20px 2px rgba(141, 132, 138, 0.5) !important;

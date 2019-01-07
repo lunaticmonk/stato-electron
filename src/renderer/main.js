@@ -4,8 +4,8 @@ import moment from "moment";
 
 import App from "./App";
 import router from "./router";
-// TODO:// remove the store provided by vue-electron.
-// import store from './store'
+
+import { remote } from "electron";
 
 import "../../bower_components/jquery/dist/jquery.min.js";
 import "../../bower_components/semantic/dist/semantic.min.css";
@@ -16,6 +16,14 @@ Vue.http = Vue.prototype.$http = axios;
 Vue.config.productionTip = false;
 
 Vue.prototype.moment = moment;
+
+remote.globalShortcut.register("CommandOrControl+Shift+K", () => {
+	remote.BrowserWindow.getFocusedWindow().webContents.openDevTools();
+});
+
+window.addEventListener("beforeunload", () => {
+	remote.globalShortcut.unregisterAll();
+});
 
 /* eslint-disable no-new */
 new Vue({

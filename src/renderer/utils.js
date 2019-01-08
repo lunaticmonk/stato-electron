@@ -7,6 +7,10 @@ const store = new Store();
 function updateUserOrgStatus(organizationId, status) {
 	const currentUserStatuses = store.get("currentUserStatuses");
 
+	// set the current org to the createdd one.
+
+	store.set("currentOrganizationId", organizationId);
+
 	if (currentUserStatuses === undefined) {
 		store.set("currentUserStatuses", []);
 	}

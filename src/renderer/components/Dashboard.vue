@@ -51,7 +51,7 @@
 			<span class="ten wide column">{{ member.first_name }} {{ member.last_name }}</span>
 			<span class="five wide column right floated">
 				<!-- TODO:// Add a function to get formatted date and time. -->
-				<span v-bind:class="getLabelClass(member.status)" v-bind:data-tooltip="moment(member.statusUpdatedAt).format('Do MMM YYYY HH:MM:SS')" v-bind:data-position="'left center'">{{ member.status }}
+				<span v-bind:class="getLabelClass(member.status)" v-bind:data-tooltip="'🚀 ' + member.status + ' from ' + moment(member.statusUpdatedAt).format('LTS')" v-bind:data-position="'top right'">{{ member.status }}
 				</span>
 			</span>
 		</div>

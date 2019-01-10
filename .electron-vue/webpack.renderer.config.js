@@ -163,7 +163,7 @@ if (process.env.NODE_ENV === 'production') {
       'process.env.NODE_ENV': '"production"',
       'process.env': require("dotenv").config({
 				path: path.join(__dirname, "../.env")
-			}).parsed
+      }).parsed
     }),
     new webpack.LoaderOptionsPlugin({
       minimize: true

@@ -61,12 +61,12 @@ if (process.env.NODE_ENV === "production") {
 	mainConfig.plugins.push(
 		new BabiliWebpackPlugin(),
 		new webpack.DefinePlugin({
-			'process.env.NODE_ENV': '"production"',
+      'process.env.NODE_ENV': '"production"',
 			'process.env': require("dotenv").config({
 				path: path.join(__dirname, "../.env")
-			}).parsed
+      }).parsed
 		})
-	);
+  );
 }
 
 module.exports = mainConfig;

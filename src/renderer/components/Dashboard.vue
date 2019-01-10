@@ -83,6 +83,23 @@ export default {
 		};
 	},
 	async mounted() {
+		/**
+		 * Open dashboard if user was logged in before quitting the app.
+		 * else open landing page.
+		 *
+		 */
+
+		const accessToken = store.get("x-access-token");
+		if (accessToken === null || accessToken === "") {
+			this.$router.push({ path: "/landing-page" });
+			return;
+		}
+
+		/**
+		 * Fetch organizations
+		 *
+		 */
+
 		this.organizations = await this.getOrganizations();
 		this.newMember = this.organizations.length > 0 ? false : true;
 
@@ -108,7 +125,7 @@ export default {
 			store.set("user", {});
 			store.set("currentOrganizationId", "");
 			store.set("currentUserStatuses", []);
-			this.$router.push({ path: "/" });
+			this.$router.push({ path: "/landing-page" });
 		},
 		setStatusAccToOrganization() {
 			const currentUserStatuses = store.get("currentUserStatuses")

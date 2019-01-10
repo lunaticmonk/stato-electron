@@ -88,7 +88,7 @@ export default {
 
 				store.set("x-access-token", resultData.data.accessToken);
 				store.set("user", resultData.data.user);
-				this.$router.push({ path: "dashboard" });
+				this.$router.push({ path: "/" });
 			}
 		}
 	}

@@ -27,7 +27,7 @@ export default {
 					this.$router.push({ path: "/join" });
 					break;
 				default:
-					this.$router.push({ path: "/dashboard" });
+					this.$router.push({ path: "/" });
 			}
 		}
 	}

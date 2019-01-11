@@ -1,22 +1,93 @@
-# stato
+# Stato
 
-> An app to keep your work going without letting anybody disturb you in between.
+<p align="center">
+ <img src="./static/256x256.png" width="128px">
+</p>
 
-#### Build Setup
+<h1 align="center">
+	❯❯❯ Stato
+</h1>
 
-``` bash
-# install dependencies
-npm install
+<p align="center">
+Work harmonically.
+</p>
 
-# serve with hot reload at localhost:9080
-npm run dev
+<p align="center">
+<img src="https://forthebadge.com/images/badges/made-with-javascript.svg">
+<img src="https://forthebadge.com/images/badges/built-with-love.svg">
+</p>
 
-# build electron application for production
-npm run build
+Stato is a minimal tool to increase your productivity and work without getting disturbed in offices or even in remote teams.
 
+- Don't let anyone disturb you when you ACTUALLY work.
+- Track how long one has been working or is offline and few other statuses.
+- Manage your statuses for multiple organizations.
 
+# Inspiration
+
+Many a times it happens that employees in teams working together may stuck on something which they want to ask to the team member or get some opinions on certain feature requests. Some employees want to focus crucially while working and don't want to get disturbed. Thus, this tool will be helpful to them without getting disturbed by other employees during their peek work time. Also, it is possible for everybody in an organization to see how much time is a certain person working on certain feature.
+
+Also, I wanted to try out [Electron](https://electronjs.org).
+
+### Tech
+
+Stato uses a number of open source projects to work properly:
+
+- [Electron](https://electronjs.org/) - HTML enhanced for web apps!
+- [Vue](https://vuejs.org/) - awesome web-based text editor
+- [Webpack](https://webpack.js.org/) - For bundling assets
+- [Semantic UI](https://semantic-ui.com/) - UI Framework
+
+### API
+
+Stato is served by the [stato-api](https://github.com/lunaticmonk/stato-api).
+
+### Installation
+
+For a ready build, head over to the releases of this GitHub repository.
+
+Stato requires [Node.js](https://nodejs.org/) v8+ to run.
+
+### Development
+
+Want to contribute? Great!
+
+Stato uses Webpack for fast developing.
+
+```sh
+$ git clone git@github.com:lunaticmonk/stato-electron.git
+$ cd stato-electron
+$ npm install
+$ npm run dev
 ```
 
----
+Create a file .env in the project root.
+Add the following environment variables to it.
 
-This project was generated with [electron-vue](https://github.com/SimulatedGREG/electron-vue) using [vue-cli](https://github.com/vuejs/vue-cli). Documentation about the original structure can be found [here](https://simulatedgreg.gitbooks.io/electron-vue/content/index.html).
+```sh
+$ API_BASE=URL_AT_WHICH_STATO_API_IS_RUNNING
+$ NODE_ENV=DEVELOPMENT_OR_PRODUCTION
+```
+
+#### Building binary
+
+For production release:
+Set the NODE_ENV=`production` in .env.
+
+```sh
+$ npm run build
+```
+
+The built binary will be in the build folder.
+
+### Todos
+
+- Suggest more features
+- Write Tests
+- Add night mode
+
+Please ⭐ this repository if you liked it.
+
+## License
+
+MIT

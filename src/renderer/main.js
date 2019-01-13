@@ -7,9 +7,9 @@ import router from "./router";
 
 import { remote } from "electron";
 
-import "../../bower_components/jquery/dist/jquery.min.js";
-import "../../bower_components/semantic/dist/semantic.min.css";
-import "../../bower_components/semantic/dist/semantic.min.js";
+import "../../node_modules/semantic-ui-css/semantic.min.css";
+
+global.$ = require('jquery/dist/jquery');
 
 if (!process.env.IS_WEB) Vue.use(require("vue-electron"));
 Vue.http = Vue.prototype.$http = axios;

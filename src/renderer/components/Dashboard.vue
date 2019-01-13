@@ -90,7 +90,7 @@ export default {
 		 */
 
 		const accessToken = store.get("x-access-token");
-		if (accessToken === null || accessToken === "") {
+		if (accessToken === null || accessToken === "" || accessToken === undefined) {
 			this.$router.push({ path: "/landing-page" });
 			return;
 		}

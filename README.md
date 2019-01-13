@@ -9,7 +9,7 @@
 </h1>
 
 <p align="center">
-Work harmonically.
+Simply work.
 </p>
 
 <p align="center">
@@ -33,10 +33,14 @@ Also, I wanted to try out [Electron](https://electronjs.org).
 
 Stato uses a number of open source projects to work properly:
 
-- [Electron](https://electronjs.org/) - HTML enhanced for web apps!
-- [Vue](https://vuejs.org/) - awesome web-based text editor
+- [Electron](https://electronjs.org/) - Framework to build cross platform native apps using HTML, CSS, JavaScript.
+- [Vue](https://vuejs.org/) - Front-end JavaScript framework
 - [Webpack](https://webpack.js.org/) - For bundling assets
 - [Semantic UI](https://semantic-ui.com/) - UI Framework
+
+### Demo
+
+See demo [here](https://lunaticmonk.github.io/stato)
 
 ### API
 
@@ -51,8 +55,6 @@ Stato requires [Node.js](https://nodejs.org/) v8+ to run.
 ### Development
 
 Want to contribute? Great!
-
-Stato uses Webpack for fast developing.
 
 ```sh
 $ git clone git@github.com:lunaticmonk/stato-electron.git
@@ -82,6 +84,7 @@ The built binary will be in the build folder.
 
 ### Todos
 
+- Add email verification for user
 - Suggest more features
 - Write Tests
 - Add night mode
